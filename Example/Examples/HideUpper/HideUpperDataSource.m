@@ -21,8 +21,8 @@
     return [[SimpleNavigationController alloc] initWithRootViewController:ctvc];
 }
 
--(NSString *)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
-    return XLSliderMovementTypeHideUpperPushLower;
+-(XLSliderContainerMovementType)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
+    return XLSliderContainerMovementTypeHideUpperPushLower;
 }
 
 -(UIView *)getDragView{

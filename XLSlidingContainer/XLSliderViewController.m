@@ -21,9 +21,6 @@
 
 @end
 
-NSString *const XLSliderMovementTypePush = @"PUSH";
-NSString *const XLSliderMovementTypeHideUpperPushLower = @"HIDEUPPER";
-
 @interface XLSliderViewController () <UIGestureRecognizerDelegate>
 @end
 
@@ -43,8 +40,6 @@ NSString *const XLSliderMovementTypeHideUpperPushLower = @"HIDEUPPER";
         _dataSource = self;
     if(!_delegate)
         _delegate = self;
-
-    _movementType = [_dataSource getMovementTypeFor:self];
 
     [self addChildViewController:self.upperController];
     [self addChildViewController:self.lowerController];
@@ -172,7 +167,7 @@ NSString *const XLSliderMovementTypeHideUpperPushLower = @"HIDEUPPER";
     CGRect f1 = self.upperView.frame;
     CGRect f2 = self.lowerView.frame;
     
-    if ([self.movementType isEqualToString:XLSliderMovementTypeHideUpperPushLower]){
+    if ([self.delegate getMovementTypeFor:self] == XLSliderContainerMovementTypeHideUpperPushLower){
         if (state == UIGestureRecognizerStateEnded){
             if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
                 
@@ -205,7 +200,7 @@ NSString *const XLSliderMovementTypeHideUpperPushLower = @"HIDEUPPER";
 
         }
     }
-    else if ([self.movementType isEqualToString:XLSliderMovementTypePush]){
+    else if ([self.delegate getMovementTypeFor:self] == XLSliderContainerMovementTypePush){
         if (state == UIGestureRecognizerStateEnded){
             if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
                 
@@ -387,10 +382,6 @@ NSString *const XLSliderMovementTypeHideUpperPushLower = @"HIDEUPPER";
     return nil;
 }
 
--(NSString *)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
-    return XLSliderMovementTypePush;
-}
-
 #pragma mark - XLSliderViewControllerDelegate
 
 - (CGFloat) getUpperViewMin{
@@ -399,6 +390,10 @@ NSString *const XLSliderMovementTypeHideUpperPushLower = @"HIDEUPPER";
 
 - (CGFloat) getLowerViewMin{
     return ((CGRectGetHeight(self.navView.frame) - [self dragViewHeight]) / 4);
+}
+
+-(XLSliderContainerMovementType)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
+    return XLSliderContainerMovementTypePush;
 }
 
 #pragma mark - UIGestureRecognizerDelegate

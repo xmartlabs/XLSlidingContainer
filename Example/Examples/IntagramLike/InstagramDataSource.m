@@ -22,8 +22,8 @@
     return controller;
 }
 
--(NSString *)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
-    return XLSliderMovementTypePush;
+-(XLSliderContainerMovementType *)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
+    return XLSliderContainerMovementTypePush;
 }
 
 -(UIView *)getDragView{
