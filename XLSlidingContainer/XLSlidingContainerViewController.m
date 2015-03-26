@@ -243,8 +243,13 @@
 }
 
 - (void)panDragView:(UIPanGestureRecognizer *)gr {
-    CGPoint location = [gr locationInView:self.dragView];
-    if ([self.dragView hitTest:location withEvent:nil] == NO && _dragState)
+    CGPoint location = [gr locationInView:self.navView];
+    CGRect frame = self.dragView.frame;
+    
+    frame.origin.y = MAX(frame.origin.y - [self.delegate getLowerExtraDraggableArea:self], 0);
+    frame.size.height = frame.size.height + 2*[self.delegate getupperExtraDraggableArea:self];
+    
+    if (CGRectContainsPoint(frame, location) == NO && _dragState)
     {
         [gr setTranslation:CGPointZero inView:self.navView];
         return;
@@ -392,6 +397,16 @@
 - (CGFloat) getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController
 {
     return ((CGRectGetHeight(self.navView.frame) - [self dragViewHeight]) / 4);
+}
+
+- (CGFloat) getLowerExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
+{
+    return 0.f;
+}
+
+- (CGFloat) getupperExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
+{
+    return 0.f;
 }
 
 -(XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController{
