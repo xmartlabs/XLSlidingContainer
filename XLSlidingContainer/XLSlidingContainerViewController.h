@@ -1,5 +1,5 @@
 //
-//  XLSlidingContainerViewController.m
+//  XLSlidingContainerViewController.h
 //  XLForm ( https://github.com/xmartlabs/XLSlidingContainer )
 //
 //  Copyright (c) 2015 Xmartlabs ( http://xmartlabs.com )
