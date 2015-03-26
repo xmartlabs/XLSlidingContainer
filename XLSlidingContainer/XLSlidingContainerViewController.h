@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+// Movement types
+typedef NS_ENUM(NSUInteger, XLSlidingContainerMovementType){
+    XLSlidingContainerMovementTypePush = 0,
+    XLSlidingContainerMovementTypeHideUpperPushLower
+};
+
+
 @class XLSlidingContainerViewController;
 
 @protocol XLSlidingContainerViewController
@@ -25,7 +32,6 @@
 @required
 - (UIViewController <XLSlidingContainerViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController;
 - (UIViewController <XLSlidingContainerViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController;
-- (NSString*) getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController;
 
 @optional
 - (UIView*) getDragView;
@@ -37,12 +43,11 @@
 @optional
 - (CGFloat) getUpperViewMinFor:(XLSlidingContainerViewController *)sliderViewController;
 - (CGFloat) getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController;
+- (XLSlidingContainerMovementType) getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController;
 @end
 
 
 @interface XLSlidingContainerViewController : UIViewController <XLSlidingContainerViewControllerDataSource, XLSlidingContainerViewControllerDelegate>
-
-@property (nonatomic) NSString* movementType;
 
 @property (nonatomic, strong) id <XLSlidingContainerViewControllerDataSource> dataSource;
 @property (nonatomic, strong) id <XLSlidingContainerViewControllerDelegate> delegate;
@@ -51,7 +56,3 @@
 -(void)reloadUpperViewController;
 @end
 
-
-//     Movement types
-extern NSString *const XLSliderMovementTypePush;
-extern NSString *const XLSliderMovementTypeHideUpperPushLower;
