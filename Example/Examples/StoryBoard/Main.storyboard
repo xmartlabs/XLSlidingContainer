@@ -4,10 +4,29 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Slider View Controller-->
+        <!--Instagram View Controller-->
+        <scene sceneID="uj0-ym-ENz">
+            <objects>
+                <viewController id="ZaA-lI-YSn" customClass="InstagramViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Z4L-t8-4nc"/>
+                        <viewControllerLayoutGuide type="bottom" id="xF1-9c-BSj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vcc-x8-wqS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Lxo-Gf-6hC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4q5-MW-hOd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1406" y="-617"/>
+        </scene>
+        <!--Sliding Container View Controller-->
         <scene sceneID="ZCF-sY-S1F">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Ert-Ir-eOO" customClass="XLSliderViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Ert-Ir-eOO" customClass="XLSlidingContainerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qfc-hJ-F88"/>
                         <viewControllerLayoutGuide type="bottom" id="T0l-Fy-DUg"/>
@@ -33,7 +52,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EJe-Hv-bSW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1406" y="-308"/>
+            <point key="canvasLocation" x="1406" y="8"/>
         </scene>
         <!--Examples-->
         <scene sceneID="Ukk-6a-cKh">
@@ -66,7 +85,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Ert-Ir-eOO" kind="push" identifier="pushToSliderControllerSegue" id="GaY-Dw-9uv"/>
+                                            <segue destination="ZaA-lI-YSn" kind="push" id="5ij-WP-Wq0"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="maincell" textLabel="u6x-zu-D4C" detailTextLabel="TKG-k5-RVj" style="IBUITableViewCellStyleSubtitle" id="HjK-l6-deS">
@@ -130,7 +149,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="GaY-Dw-9uv"/>
-    </inferredMetricsTieBreakers>
 </document>

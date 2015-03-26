@@ -7,8 +7,8 @@
 //
 
 #import "MainTableViewController.h"
-#import "XLSliderViewController.h"
-#import "InstagramDataSource.h"
+#import "XLSlidingContainerViewController.h"
+#import "InstagramViewController.h"
 #import "HideUpperDataSource.h"
 
 @interface MainTableViewController ()
@@ -114,12 +114,8 @@
     // Pass the selected object to the new view controller.
     NSIndexPath* indexPath = [self.tableView indexPathForCell:sender];
     UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    XLSliderViewController* sliderVC = segue.destinationViewController;
-        if ([cell.textLabel.text isEqualToString:EXAMPLE1 ]) {
-            InstagramDataSource* ds = [[InstagramDataSource alloc] init];
-            sliderVC.dataSource = ds;
-        }
-        else if ([cell.textLabel.text isEqualToString:EXAMPLE2 ]) {
+        if ([cell.textLabel.text isEqualToString:EXAMPLE2 ]) {
+            XLSlidingContainerViewController* sliderVC = segue.destinationViewController;
             sliderVC.dataSource = [[HideUpperDataSource alloc] init];
         }
     //self.navigationController.navigationBar.hidden = YES;

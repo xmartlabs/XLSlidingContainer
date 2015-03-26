@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XLSliderViewController.h"
+#import "XLSlidingContainerViewController.h"
 
-@interface CountryTableViewController : UITableViewController  <XLSliderController>
+@interface CountryTableViewController : UITableViewController  <XLSlidingContainerViewController>
 
 @end

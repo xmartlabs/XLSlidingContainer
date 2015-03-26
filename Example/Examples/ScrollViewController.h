@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Xmartlabs. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-#import "XLSliderViewController.h"
+#import "XLSlidingContainerViewController.h"
 
-@interface ScrollViewController : UIViewController  <XLSliderController>
+@interface ScrollViewController : UIViewController  <XLSlidingContainerViewController>
 
 @end

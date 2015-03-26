@@ -6,23 +6,25 @@
 //  Copyright (c) 2015 Xmartlabs. All rights reserved.
 //
 
-#import "InstagramDataSource.h"
+#import "InstagramViewController.h"
 #import "ScrollViewController.h"
 #import "CollectionViewLayout.h"
 #import "CollectionViewController.h"
 
-@implementation InstagramDataSource
+@implementation InstagramViewController
 
-- (UIViewController <XLSliderController>*) getUpperControllerFor:(XLSliderViewController *)sliderViewController{
+#pragma mark - XLSLiderViewControllerDataSource
+
+- (UIViewController <XLSlidingContainerViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController{
     return [[ScrollViewController alloc] init];
 }
-- (UIViewController <XLSliderController>*) getLowerControllerFor:(XLSliderViewController *)sliderViewController{
+- (UIViewController <XLSlidingContainerViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController{
     CollectionViewLayout *collectionViewLayout = [[CollectionViewLayout alloc] init];
     CollectionViewController* controller = [[CollectionViewController alloc] initWithCollectionViewLayout:collectionViewLayout];
     return controller;
 }
 
--(NSString *)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
+-(NSString *)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController{
     return XLSliderMovementTypePush;
 }
 

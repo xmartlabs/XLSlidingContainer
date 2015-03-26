@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XLSliderViewController.h"
+#import "XLSlidingContainerViewController.h"
 
-@interface InstagramDataSource : NSObject <XLSliderViewControllerDataSource>
+@interface InstagramViewController : XLSlidingContainerViewController <XLSlidingContainerViewControllerDataSource>
 
 @end
