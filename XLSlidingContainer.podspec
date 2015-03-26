@@ -44,10 +44,10 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.author             = { "Mathias Claassen" => "mathias@xmartlabs.com" }
+  # s.author             = { "Mathias Claassen" => "mathias@xmartlabs.com" }
   # Or just: s.author    = "Mathias Claassen"
-  # s.authors            = { "Mathias Claassen" => "mathias@xmartlabs.com" , "Santiago Fernandez => santiagofm@xmartlabs.com"}
-  # s.social_media_url   = "http://twitter.com/xmartlabs"
+  s.authors            = { "Mathias Claassen" => "mathias@xmartlabs.com" , "Santiago Fernandez => santiagofm@xmartlabs.com"}
+  s.social_media_url   = "http://twitter.com/xmartlabs"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Slider/**/*.{h,m,xib}"
+  s.source_files  = "XLSlidingContainer/*.{h,m}"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
