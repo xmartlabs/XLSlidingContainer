@@ -18,7 +18,6 @@
 		BF3447011AC32C0C00E4D2AE /* SimpleNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446EB1AC32C0C00E4D2AE /* SimpleNavigationController.m */; };
 		BF3447021AC32C0C00E4D2AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF3446EC1AC32C0C00E4D2AE /* Images.xcassets */; };
 		BF3447031AC32C0C00E4D2AE /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446EF1AC32C0C00E4D2AE /* CollectionViewController.m */; };
-		BF3447041AC32C0C00E4D2AE /* CollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F11AC32C0C00E4D2AE /* CollectionViewLayout.m */; };
 		BF3447061AC32C0C00E4D2AE /* MyImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F51AC32C0C00E4D2AE /* MyImageCollectionViewCell.m */; };
 		BF3447071AC32C0C00E4D2AE /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F71AC32C0C00E4D2AE /* MainTableViewController.m */; };
 		BF3447081AC32C0C00E4D2AE /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F91AC32C0C00E4D2AE /* ScrollViewController.m */; };
@@ -47,8 +46,6 @@
 		BF3446EC1AC32C0C00E4D2AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BF3446EE1AC32C0C00E4D2AE /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		BF3446EF1AC32C0C00E4D2AE /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
-		BF3446F01AC32C0C00E4D2AE /* CollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewLayout.h; sourceTree = "<group>"; };
-		BF3446F11AC32C0C00E4D2AE /* CollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewLayout.m; sourceTree = "<group>"; };
 		BF3446F41AC32C0C00E4D2AE /* MyImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyImageCollectionViewCell.h; sourceTree = "<group>"; };
 		BF3446F51AC32C0C00E4D2AE /* MyImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyImageCollectionViewCell.m; sourceTree = "<group>"; };
 		BF3446F61AC32C0C00E4D2AE /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
@@ -161,8 +158,6 @@
 				BF2D44251AC33C18009B3A29 /* Exampledragview2.xib */,
 				BF3446EE1AC32C0C00E4D2AE /* CollectionViewController.h */,
 				BF3446EF1AC32C0C00E4D2AE /* CollectionViewController.m */,
-				BF3446F01AC32C0C00E4D2AE /* CollectionViewLayout.h */,
-				BF3446F11AC32C0C00E4D2AE /* CollectionViewLayout.m */,
 				BF3446F41AC32C0C00E4D2AE /* MyImageCollectionViewCell.h */,
 				BF3446F51AC32C0C00E4D2AE /* MyImageCollectionViewCell.m */,
 			);
@@ -250,7 +245,6 @@
 			files = (
 				BF3447031AC32C0C00E4D2AE /* CollectionViewController.m in Sources */,
 				BF3447081AC32C0C00E4D2AE /* ScrollViewController.m in Sources */,
-				BF3447041AC32C0C00E4D2AE /* CollectionViewLayout.m in Sources */,
 				BF3447001AC32C0C00E4D2AE /* ImageViewController.m in Sources */,
 				BF2D44241AC33060009B3A29 /* XLSlidingContainerViewController.m in Sources */,
 				BF3446DC1AC32BF500E4D2AE /* main.m in Sources */,

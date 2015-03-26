@@ -202,7 +202,7 @@
                 
                 f0.origin.y = f1.origin.y + f1.size.height;
                 
-                f2.size.height = self.navView.bounds.size.height - f0.size.height;
+                f2.size.height = self.navView.bounds.size.height - f0.size.height - [self.delegate getUpperViewMinFor:self];
                 f2.origin.y = f0.origin.y + f0.size.height;
             }
         
@@ -235,7 +235,7 @@
                 
                 f0.origin.y = f1.origin.y + f1.size.height;
                 
-                f2.size.height = self.navView.bounds.size.height - f0.size.height;
+                f2.size.height = self.navView.bounds.size.height - f0.size.height  - [self.delegate getUpperViewMinFor:self];
                 f2.origin.y = f0.origin.y + f0.size.height;
             }
             
@@ -307,7 +307,7 @@
                 if ([weakself.lowerController respondsToSelector:@selector(minimizedController:)])
                     [weakself.lowerController minimizedController: lowerContDiff];
                 if ([weakself.upperController respondsToSelector:@selector(maximizedController:)])
-                    [weakself.upperController maximizedController: upperContDiff];
+                    [weakself.upperController maximizedController: lowerContDiff];
                 
             } completion:nil];
             
@@ -320,7 +320,7 @@
                 if ([weakself.upperController respondsToSelector:@selector(minimizedController:)])
                     [weakself.upperController minimizedController:upperContDiff];
                 if ([weakself.lowerController respondsToSelector:@selector(maximizedController:)])
-                    [weakself.lowerController maximizedController:lowerContDiff];
+                    [weakself.lowerController maximizedController:upperContDiff];
                 
             } completion:nil];
         }
