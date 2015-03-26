@@ -1,5 +1,5 @@
 //
-//  XLSliderViewController.m
+//  XLSlidingContainerViewController.m
 //  XLForm ( https://github.com/xmartlabs/XLSlidingContainer )
 //
 //  Copyright (c) 2015 Xmartlabs ( http://xmartlabs.com )
@@ -24,9 +24,9 @@
 // THE SOFTWARE.
 
 
-#import "XLSliderViewController.h"
+#import "XLSlidingContainerViewController.h"
 
-@interface XLSliderViewController ()
+@interface XLSlidingContainerViewController ()
 
 @property (nonatomic) IBOutlet UIView *dragView;
 @property (nonatomic) UIView *upperView;
@@ -34,15 +34,15 @@
 @property (nonatomic) NSInteger panDirection;
 @property (weak, nonatomic) IBOutlet UIView *navView;
 
-@property (nonatomic) UIViewController <XLSliderController> *lowerController;
-@property (nonatomic) UIViewController <XLSliderController> *upperController;
+@property (nonatomic) UIViewController <XLSlidingContainerViewController> *lowerController;
+@property (nonatomic) UIViewController <XLSlidingContainerViewController> *upperController;
 
 @end
 
-@interface XLSliderViewController () <UIGestureRecognizerDelegate>
+@interface XLSlidingContainerViewController () <UIGestureRecognizerDelegate>
 @end
 
-@implementation XLSliderViewController
+@implementation XLSlidingContainerViewController
 {
     BOOL _initialPositionSetUp;
     BOOL _dragState;
@@ -154,18 +154,18 @@
 }
 
 -(CGFloat)getMovementDifference{
-    return (CGRectGetHeight(self.navView.frame) - [self getUpperViewMin] - [self getLowerViewMin] - [self dragViewHeight] );
+    return (CGRectGetHeight(self.navView.frame) - [self.delegate getUpperViewMinFor:self] - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight] );
 }
 
 #pragma mark - Frame Management
 
 -(void)drawViews{
     
-    CGRect middle = CGRectMake(0, (self.navView.bounds.size.height - [self getLowerViewMin] - [self dragViewHeight]), self.navView.bounds.size.width, [self dragViewHeight]);
+    CGRect middle = CGRectMake(0, (self.navView.bounds.size.height - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight]), self.navView.bounds.size.width, [self dragViewHeight]);
     self.dragView.frame = middle;
-    CGRect upper = CGRectMake(0, 0, self.navView.bounds.size.width, (self.navView.bounds.size.height - [self getLowerViewMin] - [self dragViewHeight] ));
+    CGRect upper = CGRectMake(0, 0, self.navView.bounds.size.width, (self.navView.bounds.size.height - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight] ));
     self.upperView.frame = upper;
-    CGRect lower = CGRectMake(0, (self.navView.bounds.size.height - [self getLowerViewMin]), self.navView.bounds.size.width, [self getLowerViewMin]);
+    CGRect lower = CGRectMake(0, (self.navView.bounds.size.height - [self.delegate getLowerViewMinFor:self]), self.navView.bounds.size.width, [self.delegate getLowerViewMinFor:self]);
     self.lowerView.frame = lower;
 }
 
@@ -185,12 +185,12 @@
     CGRect f1 = self.upperView.frame;
     CGRect f2 = self.lowerView.frame;
     
-    if ([self.delegate getMovementTypeFor:self] == XLSliderContainerMovementTypeHideUpperPushLower){
+    if ([self.delegate getMovementTypeFor:self] == XLSlidingContainerMovementTypeHideUpperPushLower){
         if (state == UIGestureRecognizerStateEnded){
             if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
                 
-                f2.size.height = [self getLowerViewMin];
-                f2.origin.y = self.navView.frame.size.height - [self getLowerViewMin];
+                f2.size.height = [self.delegate getLowerViewMinFor:self];
+                f2.origin.y = self.navView.frame.size.height - [self.delegate getLowerViewMinFor:self];
                 
                 f0.origin.y = f2.origin.y - f0.size.height;
                 
@@ -198,7 +198,7 @@
                 
             }
             else {
-                f1.size.height = [self getUpperViewMin];
+                f1.size.height = [self.delegate getUpperViewMinFor:self];
                 
                 f0.origin.y = f1.origin.y + f1.size.height;
                 
@@ -218,12 +218,12 @@
 
         }
     }
-    else if ([self.delegate getMovementTypeFor:self] == XLSliderContainerMovementTypePush){
+    else if ([self.delegate getMovementTypeFor:self] == XLSlidingContainerMovementTypePush){
         if (state == UIGestureRecognizerStateEnded){
             if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
                 
-                f2.size.height = [self getLowerViewMin];
-                f2.origin.y = self.navView.frame.size.height - [self getLowerViewMin];
+                f2.size.height = [self.delegate getLowerViewMinFor:self];
+                f2.origin.y = self.navView.frame.size.height - [self.delegate getLowerViewMinFor:self];
                 
                 f0.origin.y = f2.origin.y - f0.size.height;
                 
@@ -231,7 +231,7 @@
                 
             }
             else {
-                f1.origin.y = [self getUpperViewMin] - f1.size.height;
+                f1.origin.y = [self.delegate getUpperViewMinFor:self] - f1.size.height;
                 
                 f0.origin.y = f1.origin.y + f1.size.height;
                 
@@ -283,7 +283,7 @@
     CGPoint dy = [gr translationInView:self.navView];
     [gr setTranslation:CGPointZero inView:self.navView];
     
-    __weak XLSliderViewController* weakself = self;
+    __weak XLSlidingContainerViewController* weakself = self;
     
     if (gr.state == UIGestureRecognizerStateEnded)
     {
@@ -298,8 +298,8 @@
         }
         
         CGFloat actualPos = self.lowerView.frame.origin.y;
-        CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self getLowerViewMin] - actualPos);
-        CGFloat upperContDiff = (actualPos - [self getUpperViewMin] - [self dragViewHeight]);
+        CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self.delegate getLowerViewMinFor:self] - actualPos);
+        CGFloat upperContDiff = (actualPos - [self.delegate getUpperViewMinFor:self] - [self dragViewHeight]);
         if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
             [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 
@@ -330,20 +330,20 @@
     
     if (dy.y > 0) {
         CGFloat xx = (self.navView.bounds.size.height - (self.lowerView.frame.origin.y + dy.y));
-        if (xx <= [self getLowerViewMin])
-            dy.y = self.navView.bounds.size.height - self.lowerView.frame.origin.y - [self getLowerViewMin];
+        if (xx <= [self.delegate getLowerViewMinFor:self])
+            dy.y = self.navView.bounds.size.height - self.lowerView.frame.origin.y - [self.delegate getLowerViewMinFor:self];
     } else {
-        if (self.upperView.frame.origin.y + self.upperView.frame.size.height + dy.y <= [self getUpperViewMin])
-            dy.y = [self getUpperViewMin] - CGRectGetHeight(self.upperView.frame) - self.upperView.frame.origin.y;
+        if (self.upperView.frame.origin.y + self.upperView.frame.size.height + dy.y <= [self.delegate getUpperViewMinFor:self])
+            dy.y = [self.delegate getUpperViewMinFor:self] - CGRectGetHeight(self.upperView.frame) - self.upperView.frame.origin.y;
     }
     [weakself updateViews:dy forState:gr.state];
     if ([weakself.upperController respondsToSelector:@selector(updateFrameForYPct: absolute:)]){
-        CGFloat yPct = 100 * ((self.dragView.frame.origin.y - [self getUpperViewMin]) / (self.navView.bounds.size.height - [self getUpperViewMin] - [self getLowerViewMin] - [self dragViewHeight]));
+        CGFloat yPct = 100 * ((self.dragView.frame.origin.y - [self.delegate getUpperViewMinFor:self]) / (self.navView.bounds.size.height - [self.delegate getUpperViewMinFor:self] - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight]));
         [weakself.upperController updateFrameForYPct:yPct absolute:dy.y];
         
     }
     if ([weakself.lowerController respondsToSelector:@selector(updateFrameForYPct:absolute:)]){
-        CGFloat yPct = 100 - 100 * ((self.dragView.frame.origin.y - [self getUpperViewMin]) / (self.navView.bounds.size.height - [self getUpperViewMin] - [self getLowerViewMin] - [self dragViewHeight]));
+        CGFloat yPct = 100 - 100 * ((self.dragView.frame.origin.y - [self.delegate getUpperViewMinFor:self]) / (self.navView.bounds.size.height - [self.delegate getUpperViewMinFor:self] - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight]));
         [weakself.lowerController updateFrameForYPct:yPct absolute:dy.y];
     }
     
@@ -388,13 +388,13 @@
 
 #pragma mark - XLSliderViewControllerDataSource
 
-- (UIViewController *) getLowerControllerFor:(XLSliderViewController *)sliderViewController;
+- (UIViewController *) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController;
 {
     NSAssert(NO, @"_dataSource must be set");
     return nil;
 }
 
-- (UIViewController *) getUpperControllerFor:(XLSliderViewController *)sliderViewController;
+- (UIViewController *) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController;
 {
     NSAssert(NO, @"_dataSource must be set");
     return nil;
@@ -402,16 +402,18 @@
 
 #pragma mark - XLSliderViewControllerDelegate
 
-- (CGFloat) getUpperViewMin{
+- (CGFloat) getUpperViewMinFor:(XLSlidingContainerViewController *)sliderViewController
+{
     return (CGRectGetHeight(self.navView.frame) / 6);
 }
 
-- (CGFloat) getLowerViewMin{
+- (CGFloat) getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController
+{
     return ((CGRectGetHeight(self.navView.frame) - [self dragViewHeight]) / 4);
 }
 
--(XLSliderContainerMovementType)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
-    return XLSliderContainerMovementTypePush;
+-(XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController{
+    return XLSlidingContainerMovementTypePush;
 }
 
 #pragma mark - UIGestureRecognizerDelegate

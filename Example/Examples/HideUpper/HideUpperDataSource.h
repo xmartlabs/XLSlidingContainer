@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "XLSliderViewController.h"
+#import "XLSlidingContainerViewController.h"
 
-@interface HideUpperDataSource : NSObject <XLSliderViewControllerDataSource>
+@interface HideUpperDataSource : NSObject <XLSlidingContainerViewControllerDataSource>
 
 @end

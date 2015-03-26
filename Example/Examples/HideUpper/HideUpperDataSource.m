@@ -30,16 +30,17 @@
 
 @implementation HideUpperDataSource
 
-- (UIViewController <XLSliderController>*) getLowerControllerFor:(XLSliderViewController *)sliderViewController{
+- (UIViewController <XLSlidingContainerViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController{
     return [[ScrollViewController alloc] init];
 }
-- (UIViewController <XLSliderController>*) getUpperControllerFor:(XLSliderViewController *)sliderViewController{
+- (UIViewController <XLSlidingContainerViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController{
     CountryTableViewController* ctvc = [[CountryTableViewController alloc] init];
     return [[SimpleNavigationController alloc] initWithRootViewController:ctvc];
 }
 
--(XLSliderContainerMovementType)getMovementTypeFor:(XLSliderViewController *)sliderViewController{
-    return XLSliderContainerMovementTypeHideUpperPushLower;
+-(XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController
+{
+    return XLSlidingContainerMovementTypeHideUpperPushLower;
 }
 
 -(UIView *)getDragView{

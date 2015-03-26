@@ -1,5 +1,5 @@
 //
-//  InstagramDataSource.h
+//  InstagramDataSource.m
 //  XLForm ( https://github.com/xmartlabs/XLSlidingContainer )
 //
 //  Copyright (c) 2015 Xmartlabs ( http://xmartlabs.com )
@@ -23,9 +23,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "XLSliderViewController.h"
+#import "InstagramViewController.h"
+#import "ScrollViewController.h"
+#import "CollectionViewLayout.h"
+#import "CollectionViewController.h"
 
-@interface InstagramDataSource : NSObject <XLSliderViewControllerDataSource>
+@implementation InstagramViewController
+
+#pragma mark - XLSLiderViewControllerDataSource
+
+- (UIViewController <XLSlidingContainerViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController{
+    return [[ScrollViewController alloc] init];
+}
+- (UIViewController <XLSlidingContainerViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController{
+    CollectionViewLayout *collectionViewLayout = [[CollectionViewLayout alloc] init];
+    CollectionViewController* controller = [[CollectionViewController alloc] initWithCollectionViewLayout:collectionViewLayout];
+    return controller;
+}
+
+-(XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController{
+    return XLSlidingContainerMovementTypePush;
+}
+
+-(UIView *)getDragView{
+    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"Exampledragview2" owner:nil options:nil];
+    return [nibContents lastObject];
+}
 
 @end

@@ -47,11 +47,11 @@
     // Dispose of any resources that can be recreated.
 }
 - (void) minimizedController:(CGFloat) diff{
-    UIViewController<XLSliderController>* root = [[self viewControllers] firstObject];
+    UIViewController<XLSlidingContainerViewController>* root = [[self viewControllers] firstObject];
     [root minimizedController:(diff + CGRectGetHeight(self.navigationController.navigationBar.frame))];
 }
 - (void) maximizedController:(CGFloat) diff{
-    UIViewController<XLSliderController>* root = [[self viewControllers] firstObject];
+    UIViewController<XLSlidingContainerViewController>* root = [[self viewControllers] firstObject];
     [root maximizedController:(diff + CGRectGetHeight(self.navigationController.navigationBar.frame))];
 }
 - (void) updateFrameForYPct:(CGFloat)y{

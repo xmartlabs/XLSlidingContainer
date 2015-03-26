@@ -24,8 +24,8 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "XLSliderViewController.h"
+#import "XLSlidingContainerViewController.h"
 
-@interface CollectionViewController : UICollectionViewController <UICollectionViewDelegate, XLSliderController>
+@interface CollectionViewController : UICollectionViewController <UICollectionViewDelegate, XLSlidingContainerViewController>
 
 @end

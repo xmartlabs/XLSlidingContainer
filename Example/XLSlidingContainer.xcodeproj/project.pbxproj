@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF2D44241AC33060009B3A29 /* XLSliderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2D44231AC33060009B3A29 /* XLSliderViewController.m */; };
+		BF2D44241AC33060009B3A29 /* XLSlidingContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2D44231AC33060009B3A29 /* XLSlidingContainerViewController.m */; };
 		BF2D44261AC33C18009B3A29 /* Exampledragview2.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF2D44251AC33C18009B3A29 /* Exampledragview2.xib */; };
 		BF3446DC1AC32BF500E4D2AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446D61AC32BF500E4D2AE /* main.m */; };
 		BF3446FC1AC32C0C00E4D2AE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446E11AC32C0C00E4D2AE /* AppDelegate.m */; };
@@ -19,17 +19,16 @@
 		BF3447021AC32C0C00E4D2AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF3446EC1AC32C0C00E4D2AE /* Images.xcassets */; };
 		BF3447031AC32C0C00E4D2AE /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446EF1AC32C0C00E4D2AE /* CollectionViewController.m */; };
 		BF3447041AC32C0C00E4D2AE /* CollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F11AC32C0C00E4D2AE /* CollectionViewLayout.m */; };
-		BF3447051AC32C0C00E4D2AE /* InstagramDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F31AC32C0C00E4D2AE /* InstagramDataSource.m */; };
 		BF3447061AC32C0C00E4D2AE /* MyImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F51AC32C0C00E4D2AE /* MyImageCollectionViewCell.m */; };
 		BF3447071AC32C0C00E4D2AE /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F71AC32C0C00E4D2AE /* MainTableViewController.m */; };
 		BF3447081AC32C0C00E4D2AE /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F91AC32C0C00E4D2AE /* ScrollViewController.m */; };
 		BF3447091AC32C0C00E4D2AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF3446FB1AC32C0C00E4D2AE /* Main.storyboard */; };
 		BF34470B1AC32C6D00E4D2AE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF34470A1AC32C6D00E4D2AE /* QuartzCore.framework */; };
+		DEE00D421AC46AE20063D687 /* InstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE00D3C1AC46AE20063D687 /* InstagramViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF2D44221AC33060009B3A29 /* XLSliderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLSliderViewController.h; sourceTree = "<group>"; };
-		BF2D44231AC33060009B3A29 /* XLSliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLSliderViewController.m; sourceTree = "<group>"; };
+		BF2D44231AC33060009B3A29 /* XLSlidingContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLSlidingContainerViewController.m; sourceTree = "<group>"; };
 		BF2D44251AC33C18009B3A29 /* Exampledragview2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Exampledragview2.xib; sourceTree = "<group>"; };
 		BF3446A91AC32B7900E4D2AE /* XLSlidingContainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLSlidingContainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF3446D51AC32BF500E4D2AE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,8 +49,6 @@
 		BF3446EF1AC32C0C00E4D2AE /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		BF3446F01AC32C0C00E4D2AE /* CollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewLayout.h; sourceTree = "<group>"; };
 		BF3446F11AC32C0C00E4D2AE /* CollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewLayout.m; sourceTree = "<group>"; };
-		BF3446F21AC32C0C00E4D2AE /* InstagramDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramDataSource.h; sourceTree = "<group>"; };
-		BF3446F31AC32C0C00E4D2AE /* InstagramDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramDataSource.m; sourceTree = "<group>"; };
 		BF3446F41AC32C0C00E4D2AE /* MyImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyImageCollectionViewCell.h; sourceTree = "<group>"; };
 		BF3446F51AC32C0C00E4D2AE /* MyImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyImageCollectionViewCell.m; sourceTree = "<group>"; };
 		BF3446F61AC32C0C00E4D2AE /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
@@ -60,6 +57,9 @@
 		BF3446F91AC32C0C00E4D2AE /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewController.m; sourceTree = "<group>"; };
 		BF3446FB1AC32C0C00E4D2AE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BF34470A1AC32C6D00E4D2AE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DEE00D3B1AC46AE20063D687 /* InstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramViewController.h; sourceTree = "<group>"; };
+		DEE00D3C1AC46AE20063D687 /* InstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramViewController.m; sourceTree = "<group>"; };
+		DEE00D451AC471A40063D687 /* XLSlidingContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLSlidingContainerViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,8 +77,8 @@
 		BF2D44211AC33060009B3A29 /* XLSlidingContainer */ = {
 			isa = PBXGroup;
 			children = (
-				BF2D44221AC33060009B3A29 /* XLSliderViewController.h */,
-				BF2D44231AC33060009B3A29 /* XLSliderViewController.m */,
+				DEE00D451AC471A40063D687 /* XLSlidingContainerViewController.h */,
+				BF2D44231AC33060009B3A29 /* XLSlidingContainerViewController.m */,
 			);
 			name = XLSlidingContainer;
 			path = ../XLSlidingContainer;
@@ -156,13 +156,13 @@
 		BF3446ED1AC32C0C00E4D2AE /* IntagramLike */ = {
 			isa = PBXGroup;
 			children = (
+				DEE00D3B1AC46AE20063D687 /* InstagramViewController.h */,
+				DEE00D3C1AC46AE20063D687 /* InstagramViewController.m */,
 				BF2D44251AC33C18009B3A29 /* Exampledragview2.xib */,
 				BF3446EE1AC32C0C00E4D2AE /* CollectionViewController.h */,
 				BF3446EF1AC32C0C00E4D2AE /* CollectionViewController.m */,
 				BF3446F01AC32C0C00E4D2AE /* CollectionViewLayout.h */,
 				BF3446F11AC32C0C00E4D2AE /* CollectionViewLayout.m */,
-				BF3446F21AC32C0C00E4D2AE /* InstagramDataSource.h */,
-				BF3446F31AC32C0C00E4D2AE /* InstagramDataSource.m */,
 				BF3446F41AC32C0C00E4D2AE /* MyImageCollectionViewCell.h */,
 				BF3446F51AC32C0C00E4D2AE /* MyImageCollectionViewCell.m */,
 			);
@@ -252,10 +252,10 @@
 				BF3447081AC32C0C00E4D2AE /* ScrollViewController.m in Sources */,
 				BF3447041AC32C0C00E4D2AE /* CollectionViewLayout.m in Sources */,
 				BF3447001AC32C0C00E4D2AE /* ImageViewController.m in Sources */,
-				BF2D44241AC33060009B3A29 /* XLSliderViewController.m in Sources */,
-				BF3447051AC32C0C00E4D2AE /* InstagramDataSource.m in Sources */,
+				BF2D44241AC33060009B3A29 /* XLSlidingContainerViewController.m in Sources */,
 				BF3446DC1AC32BF500E4D2AE /* main.m in Sources */,
 				BF3447061AC32C0C00E4D2AE /* MyImageCollectionViewCell.m in Sources */,
+				DEE00D421AC46AE20063D687 /* InstagramViewController.m in Sources */,
 				BF3447011AC32C0C00E4D2AE /* SimpleNavigationController.m in Sources */,
 				BF3447071AC32C0C00E4D2AE /* MainTableViewController.m in Sources */,
 				BF3446FD1AC32C0C00E4D2AE /* CountryTableViewController.m in Sources */,
