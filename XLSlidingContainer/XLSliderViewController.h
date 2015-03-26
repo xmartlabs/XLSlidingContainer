@@ -1,5 +1,5 @@
 //
-//  XLSlidingContainerViewController.h
+//  XLSliderViewController.h
 //  XLForm ( https://github.com/xmartlabs/XLSlidingContainer )
 //
 //  Copyright (c) 2015 Xmartlabs ( http://xmartlabs.com )
@@ -26,15 +26,15 @@
 #import <UIKit/UIKit.h>
 
 // Movement types
-typedef NS_ENUM(NSUInteger, XLSlidingContainerMovementType){
-    XLSlidingContainerMovementTypePush = 0,
-    XLSlidingContainerMovementTypeHideUpperPushLower
+typedef NS_ENUM(NSUInteger, XLSliderContainerMovementType){
+    XLSliderContainerMovementTypePush = 0,
+    XLSliderContainerMovementTypeHideUpperPushLower
 };
 
 
-@class XLSlidingContainerViewController;
+@class XLSliderViewController;
 
-@protocol XLSlidingContainerViewController
+@protocol XLSliderController
 // to be implemented by embedded controllers
 @optional
 - (void) minimizedController:(CGFloat) diff;
@@ -44,32 +44,30 @@ typedef NS_ENUM(NSUInteger, XLSlidingContainerMovementType){
 @end
 
 
-@protocol XLSlidingContainerViewControllerDataSource <NSObject>
+@protocol XLSliderViewControllerDataSource <NSObject>
 // datasource
 @required
-- (UIViewController <XLSlidingContainerViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController;
-- (UIViewController <XLSlidingContainerViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController;
+- (UIViewController <XLSliderController>*) getLowerControllerFor:(XLSliderViewController *)sliderViewController;
+- (UIViewController <XLSliderController>*) getUpperControllerFor:(XLSliderViewController *)sliderViewController;
 
 @optional
 - (UIView*) getDragView;
 @end
 
 
-@protocol XLSlidingContainerViewControllerDelegate <NSObject>
+@protocol XLSliderViewControllerDelegate <NSObject>
 // delegate
 @optional
-- (CGFloat) getUpperViewMinFor:(XLSlidingContainerViewController *)sliderViewController;
-- (CGFloat) getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController;
-- (CGFloat) getLowerExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController;
-- (CGFloat) getupperExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController;
-- (XLSlidingContainerMovementType) getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController;
+- (CGFloat) getUpperViewMin;
+- (CGFloat) getLowerViewMin;
+- (XLSliderContainerMovementType) getMovementTypeFor:(XLSliderViewController *)sliderViewController;
 @end
 
 
-@interface XLSlidingContainerViewController : UIViewController <XLSlidingContainerViewControllerDataSource, XLSlidingContainerViewControllerDelegate>
+@interface XLSliderViewController : UIViewController <XLSliderViewControllerDataSource, XLSliderViewControllerDelegate>
 
-@property (nonatomic, strong) id <XLSlidingContainerViewControllerDataSource> dataSource;
-@property (nonatomic, strong) id <XLSlidingContainerViewControllerDelegate> delegate;
+@property (nonatomic, strong) id <XLSliderViewControllerDataSource> dataSource;
+@property (nonatomic, strong) id <XLSliderViewControllerDelegate> delegate;
 
 -(void)reloadLowerViewController;
 -(void)reloadUpperViewController;
