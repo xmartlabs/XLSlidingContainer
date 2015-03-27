@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "XLSlidingContainerViewController.h"
 
-@interface InstagramViewController : XLSlidingContainerViewController <XLSlidingContainerViewControllerDataSource>
+@interface InstagramViewController : XLSlidingContainerViewController <XLSlidingContainerViewControllerDataSource, XLSlidingContainerViewControllerDelegate>
 
 @end

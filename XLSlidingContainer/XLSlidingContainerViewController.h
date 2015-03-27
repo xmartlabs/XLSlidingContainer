@@ -60,11 +60,12 @@ typedef NS_ENUM(NSUInteger, XLSlidingContainerMovementType){
 @optional
 - (CGFloat)getUpperViewMinFor:(XLSlidingContainerViewController *)sliderViewController;
 - (CGFloat)getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController;
+- (CGFloat) getLowerExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController;
+- (CGFloat) getupperExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController;
 - (XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController;
 
 -(void)slidingContainerDidBeginDrag:(XLSlidingContainerViewController *)sliderViewController;
 -(void)slidingContainerDidEndDrag:(XLSlidingContainerViewController *)sliderViewController;
-
 @end
 
 

@@ -263,13 +263,17 @@
 }
 
 - (void)panDragView:(UIPanGestureRecognizer *)gr {
-    CGPoint location = [gr locationInView:self.dragView];
+    CGPoint location = [gr locationInView:self.navView];
+    CGRect frame = self.dragView.frame;
+    
+    frame.origin.y = MAX(frame.origin.y - [self.delegate getLowerExtraDraggableArea:self], 0);
+    frame.size.height = frame.size.height + 2*[self.delegate getupperExtraDraggableArea:self];
+    
     CGPoint dy = [gr translationInView:self.navView];
     [gr setTranslation:CGPointZero inView:self.navView];
-//    CGPoint velocity = [gr velocityInView:self.navView];
     
     
-    if ([self.dragView hitTest:location withEvent:nil] == NO && _isDragging == NO){
+    if (CGRectContainsPoint(frame, location) == NO  && _isDragging == NO){
         // pan ousite drag area
         return;
     }
@@ -294,7 +298,7 @@
         CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self.delegate getLowerViewMinFor:self] - actualPos);
         CGFloat upperContDiff = (actualPos - [self.delegate getUpperViewMinFor:self] - [self dragViewHeight]);
         if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
-            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
                 if ([weakself.lowerController respondsToSelector:@selector(minimizedController:)])
@@ -306,7 +310,7 @@
             
         }
         else{
-            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
                 
@@ -397,12 +401,22 @@
 
 - (CGFloat) getUpperViewMinFor:(XLSlidingContainerViewController *)sliderViewController
 {
-    return (CGRectGetHeight(self.navView.frame) / 6);
+    return (CGRectGetHeight(self.navView.frame) / 5);
 }
 
 - (CGFloat) getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController
 {
     return ((CGRectGetHeight(self.navView.frame) - [self dragViewHeight]) / 4);
+}
+
+- (CGFloat) getLowerExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
+{
+    return 0.f;
+}
+
+- (CGFloat) getupperExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
+{
+    return 0.f;
 }
 
 -(XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController{

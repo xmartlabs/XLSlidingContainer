@@ -37,4 +37,16 @@
     return [nibContents lastObject];
 }
 
+#pragma mark - XLSliderViewControllerDelegate
+
+- (CGFloat)getupperExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
+{
+    return 50.f;
+}
+
+- (CGFloat)getLowerExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
+{
+    return 50.f;
+}
+
 @end
