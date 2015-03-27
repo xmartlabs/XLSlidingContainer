@@ -306,7 +306,7 @@
         CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self.delegate getLowerViewMinFor:self] - actualPos);
         CGFloat upperContDiff = (actualPos - [self.delegate getUpperViewMinFor:self] - [self dragViewHeight]);
         if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
-            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
                 if ([weakself.lowerController respondsToSelector:@selector(minimizedController:)])
@@ -318,7 +318,7 @@
             
         }
         else{
-            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
                 
@@ -409,7 +409,7 @@
 
 - (CGFloat) getUpperViewMinFor:(XLSlidingContainerViewController *)sliderViewController
 {
-    return (CGRectGetHeight(self.navView.frame) / 6);
+    return (CGRectGetHeight(self.navView.frame) / 5);
 }
 
 - (CGFloat) getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController
