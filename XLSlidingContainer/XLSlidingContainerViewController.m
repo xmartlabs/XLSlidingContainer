@@ -26,6 +26,8 @@
 
 #import "XLSlidingContainerViewController.h"
 
+#define VEL_THRESHOLD 4000
+
 @interface XLSlidingContainerViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic) IBOutlet UIView *dragView;
@@ -43,6 +45,7 @@
 {
     BOOL _initialPositionSetUp;
     BOOL _isDragging;
+    double _lastChange;
 }
 
 - (void)viewDidLoad {
@@ -271,6 +274,9 @@
         frame.size.height = frame.size.height + 2*[self.delegate getupperExtraDraggableArea:self];
     }
     
+    if ( gr.state == UIGestureRecognizerStateChanged )
+        _lastChange = CFAbsoluteTimeGetCurrent();
+    
     CGPoint dy = [gr translationInView:self.navView];
     [gr setTranslation:CGPointZero inView:self.navView];
     
@@ -292,6 +298,15 @@
     
     if (gr.state == UIGestureRecognizerStateEnded)
     {
+       
+        double curTime = CFAbsoluteTimeGetCurrent();
+        double timeElapsed = curTime - _lastChange;
+        double velocity = ( ABS(self.panDirection) / timeElapsed );
+        if ( velocity > VEL_THRESHOLD )
+            velocity = VEL_THRESHOLD;
+        double realVelocity = (velocity / VEL_THRESHOLD);
+        (realVelocity < 0.1) ? realVelocity = 0.1 : realVelocity;
+        
         _isDragging = NO;
         if ([self.delegate respondsToSelector:@selector(slidingContainerDidBeginDrag:)]){
             [self.delegate slidingContainerDidEndDrag:self];
@@ -300,7 +315,7 @@
         CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self.delegate getLowerViewMinFor:self] - actualPos);
         CGFloat upperContDiff = (actualPos - [self.delegate getUpperViewMinFor:self] - [self dragViewHeight]);
         if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
-            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
+            [UIView animateWithDuration:(0.9 - (realVelocity/2))  delay:0.0 usingSpringWithDamping:0.8 - (realVelocity/2) initialSpringVelocity:realVelocity options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
                 if ([weakself.lowerController respondsToSelector:@selector(minimizedController:)])
@@ -312,10 +327,9 @@
             
         }
         else{
-            [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
+            [UIView animateWithDuration:(0.9 - (realVelocity/2)) delay:0.0 usingSpringWithDamping:0.8 - (realVelocity/2) initialSpringVelocity:realVelocity options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
-                
                 if ([weakself.upperController respondsToSelector:@selector(minimizedController:)])
                     [weakself.upperController minimizedController:upperContDiff];
                 if ([weakself.lowerController respondsToSelector:@selector(maximizedController:)])
@@ -422,7 +436,7 @@
 }
 
 -(XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController{
-    return XLSlidingContainerMovementTypePush;
+    return XLSlidingContainerMovementTypeHideUpperPushLower;
 }
 
 #pragma mark - UIGestureRecognizerDelegate

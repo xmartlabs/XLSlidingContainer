@@ -38,10 +38,6 @@
     return [[SimpleNavigationController alloc] initWithRootViewController:ctvc];
 }
 
--(XLSlidingContainerMovementType)getMovementTypeFor:(XLSlidingContainerViewController *)sliderViewController
-{
-    return XLSlidingContainerMovementTypeHideUpperPushLower;
-}
 
 -(UIView *)getDragView{
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"Exampledragview" owner:nil options:nil];

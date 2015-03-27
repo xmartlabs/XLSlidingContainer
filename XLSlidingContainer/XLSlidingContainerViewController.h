@@ -28,7 +28,7 @@
 // Movement types
 typedef NS_ENUM(NSUInteger, XLSlidingContainerMovementType){
     XLSlidingContainerMovementTypePush = 0,
-    XLSlidingContainerMovementTypeHideUpperPushLower
+    XLSlidingContainerMovementTypeHideUpperPushLower = 1
 };
 
 
