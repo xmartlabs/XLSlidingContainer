@@ -26,7 +26,7 @@
 
 #import "XLSlidingContainerViewController.h"
 
-@interface XLSlidingContainerViewController ()
+@interface XLSlidingContainerViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic) IBOutlet UIView *dragView;
 @property (nonatomic) UIView *upperView;
@@ -39,20 +39,17 @@
 
 @end
 
-@interface XLSlidingContainerViewController () <UIGestureRecognizerDelegate>
-@end
-
 @implementation XLSlidingContainerViewController
 {
     BOOL _initialPositionSetUp;
-    BOOL _dragState;
+    BOOL _isDragging;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     _initialPositionSetUp = NO;
-    _dragState = YES;
+    _isDragging = NO;
     
     if(!_dataSource)
         _dataSource = self;
@@ -84,7 +81,11 @@
     
     UIPanGestureRecognizer* pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDragView:)];
     pgr.delegate = self;
+    [pgr setDelaysTouchesBegan:NO];
+    [pgr setDelaysTouchesEnded:NO];
+    [pgr setCancelsTouchesInView:NO];
     [self.navView addGestureRecognizer:pgr];
+    
 }
 
 
@@ -97,6 +98,7 @@
     }
     self.lowerController.view.frame = [self frameForLowerController];
     self.upperController.view.frame = [self frameForUpperController];
+    
 }
 
 #pragma mark - Getter and Setter
@@ -262,41 +264,32 @@
 
 - (void)panDragView:(UIPanGestureRecognizer *)gr {
     CGPoint location = [gr locationInView:self.dragView];
-    if ([self.dragView hitTest:location withEvent:nil] == NO && _dragState)
-    {
-        [gr setTranslation:CGPointZero inView:self.navView];
-        return;
-    }
-    else
-    {
-        _dragState = NO;
-        for(UIGestureRecognizer *g in self.lowerController.view.gestureRecognizers)
-        {
-            [g setEnabled:NO];
-        }
-        for(UIGestureRecognizer *g in self.upperController.view.gestureRecognizers)
-        {
-            [g setEnabled:NO];
-        }
-    }
-    
     CGPoint dy = [gr translationInView:self.navView];
     [gr setTranslation:CGPointZero inView:self.navView];
+//    CGPoint velocity = [gr velocityInView:self.navView];
     
-    __weak XLSlidingContainerViewController* weakself = self;
+    
+    if ([self.dragView hitTest:location withEvent:nil] == NO && _isDragging == NO){
+        // pan ousite drag area
+        return;
+    }
+    else if (!_isDragging){
+        _isDragging = YES;
+        if ([self.delegate respondsToSelector:@selector(slidingContainerDidEndDrag:)]){
+            [self.delegate slidingContainerDidEndDrag:self];
+        }
+    }
+    
+
+    
+    XLSlidingContainerViewController* __weak weakself = self;
     
     if (gr.state == UIGestureRecognizerStateEnded)
     {
-        _dragState = YES;
-        for(UIGestureRecognizer *g in self.lowerController.view.gestureRecognizers)
-        {
-            [g setEnabled:YES];
+        _isDragging = NO;
+        if ([self.delegate respondsToSelector:@selector(slidingContainerDidBeginDrag:)]){
+            [self.delegate slidingContainerDidEndDrag:self];
         }
-        for(UIGestureRecognizer *g in self.upperController.view.gestureRecognizers)
-        {
-            [g setEnabled:YES];
-        }
-        
         CGFloat actualPos = self.lowerView.frame.origin.y;
         CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self.delegate getLowerViewMinFor:self] - actualPos);
         CGFloat upperContDiff = (actualPos - [self.delegate getUpperViewMinFor:self] - [self dragViewHeight]);

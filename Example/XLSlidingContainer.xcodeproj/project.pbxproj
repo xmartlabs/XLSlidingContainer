@@ -22,7 +22,6 @@
 		BF3447071AC32C0C00E4D2AE /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F71AC32C0C00E4D2AE /* MainTableViewController.m */; };
 		BF3447081AC32C0C00E4D2AE /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3446F91AC32C0C00E4D2AE /* ScrollViewController.m */; };
 		BF3447091AC32C0C00E4D2AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF3446FB1AC32C0C00E4D2AE /* Main.storyboard */; };
-		BF34470B1AC32C6D00E4D2AE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF34470A1AC32C6D00E4D2AE /* QuartzCore.framework */; };
 		DEE00D421AC46AE20063D687 /* InstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE00D3C1AC46AE20063D687 /* InstagramViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +52,6 @@
 		BF3446F81AC32C0C00E4D2AE /* ScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewController.h; sourceTree = "<group>"; };
 		BF3446F91AC32C0C00E4D2AE /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewController.m; sourceTree = "<group>"; };
 		BF3446FB1AC32C0C00E4D2AE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		BF34470A1AC32C6D00E4D2AE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DEE00D3B1AC46AE20063D687 /* InstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstagramViewController.h; sourceTree = "<group>"; };
 		DEE00D3C1AC46AE20063D687 /* InstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramViewController.m; sourceTree = "<group>"; };
 		DEE00D451AC471A40063D687 /* XLSlidingContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLSlidingContainerViewController.h; sourceTree = "<group>"; };
@@ -64,7 +62,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF34470B1AC32C6D00E4D2AE /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +83,6 @@
 			children = (
 				BF2D44211AC33060009B3A29 /* XLSlidingContainer */,
 				BF3446DF1AC32C0C00E4D2AE /* Examples */,
-				BF34470A1AC32C6D00E4D2AE /* QuartzCore.framework */,
 				BF3446AB1AC32B7900E4D2AE /* XLSlidingContainer */,
 				BF3446AA1AC32B7900E4D2AE /* Products */,
 			);
