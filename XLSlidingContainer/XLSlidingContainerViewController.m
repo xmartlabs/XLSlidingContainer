@@ -26,7 +26,7 @@
 
 #import "XLSlidingContainerViewController.h"
 
-@interface XLSlidingContainerViewController ()
+@interface XLSlidingContainerViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic) IBOutlet UIView *dragView;
 @property (nonatomic) UIView *upperView;
@@ -39,20 +39,17 @@
 
 @end
 
-@interface XLSlidingContainerViewController () <UIGestureRecognizerDelegate>
-@end
-
 @implementation XLSlidingContainerViewController
 {
     BOOL _initialPositionSetUp;
-    BOOL _dragState;
+    BOOL _isDragging;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     _initialPositionSetUp = NO;
-    _dragState = YES;
+    _isDragging = NO;
     
     if(!_dataSource)
         _dataSource = self;
@@ -84,7 +81,11 @@
     
     UIPanGestureRecognizer* pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDragView:)];
     pgr.delegate = self;
+    [pgr setDelaysTouchesBegan:NO];
+    [pgr setDelaysTouchesEnded:NO];
+    [pgr setCancelsTouchesInView:NO];
     [self.navView addGestureRecognizer:pgr];
+    
 }
 
 
@@ -97,6 +98,7 @@
     }
     self.lowerController.view.frame = [self frameForLowerController];
     self.upperController.view.frame = [self frameForUpperController];
+    
 }
 
 #pragma mark - Getter and Setter
@@ -202,7 +204,7 @@
                 
                 f0.origin.y = f1.origin.y + f1.size.height;
                 
-                f2.size.height = self.navView.bounds.size.height - f0.size.height;
+                f2.size.height = self.navView.bounds.size.height - f0.size.height - [self.delegate getUpperViewMinFor:self];
                 f2.origin.y = f0.origin.y + f0.size.height;
             }
         
@@ -235,7 +237,7 @@
                 
                 f0.origin.y = f1.origin.y + f1.size.height;
                 
-                f2.size.height = self.navView.bounds.size.height - f0.size.height;
+                f2.size.height = self.navView.bounds.size.height - f0.size.height  - [self.delegate getUpperViewMinFor:self];
                 f2.origin.y = f0.origin.y + f0.size.height;
             }
             
@@ -267,41 +269,31 @@
     frame.origin.y = MAX(frame.origin.y - [self.delegate getLowerExtraDraggableArea:self], 0);
     frame.size.height = frame.size.height + 2*[self.delegate getupperExtraDraggableArea:self];
     
-    if (CGRectContainsPoint(frame, location) == NO && _dragState)
-    {
-        [gr setTranslation:CGPointZero inView:self.navView];
-        return;
-    }
-    else
-    {
-        _dragState = NO;
-        for(UIGestureRecognizer *g in self.lowerController.view.gestureRecognizers)
-        {
-            [g setEnabled:NO];
-        }
-        for(UIGestureRecognizer *g in self.upperController.view.gestureRecognizers)
-        {
-            [g setEnabled:NO];
-        }
-    }
-    
     CGPoint dy = [gr translationInView:self.navView];
     [gr setTranslation:CGPointZero inView:self.navView];
     
-    __weak XLSlidingContainerViewController* weakself = self;
+    
+    if (CGRectContainsPoint(frame, location) == NO  && _isDragging == NO){
+        // pan ousite drag area
+        return;
+    }
+    else if (!_isDragging){
+        _isDragging = YES;
+        if ([self.delegate respondsToSelector:@selector(slidingContainerDidEndDrag:)]){
+            [self.delegate slidingContainerDidEndDrag:self];
+        }
+    }
+    
+
+    
+    XLSlidingContainerViewController* __weak weakself = self;
     
     if (gr.state == UIGestureRecognizerStateEnded)
     {
-        _dragState = YES;
-        for(UIGestureRecognizer *g in self.lowerController.view.gestureRecognizers)
-        {
-            [g setEnabled:YES];
+        _isDragging = NO;
+        if ([self.delegate respondsToSelector:@selector(slidingContainerDidBeginDrag:)]){
+            [self.delegate slidingContainerDidEndDrag:self];
         }
-        for(UIGestureRecognizer *g in self.upperController.view.gestureRecognizers)
-        {
-            [g setEnabled:YES];
-        }
-        
         CGFloat actualPos = self.lowerView.frame.origin.y;
         CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self.delegate getLowerViewMinFor:self] - actualPos);
         CGFloat upperContDiff = (actualPos - [self.delegate getUpperViewMinFor:self] - [self dragViewHeight]);
@@ -312,7 +304,7 @@
                 if ([weakself.lowerController respondsToSelector:@selector(minimizedController:)])
                     [weakself.lowerController minimizedController: lowerContDiff];
                 if ([weakself.upperController respondsToSelector:@selector(maximizedController:)])
-                    [weakself.upperController maximizedController: upperContDiff];
+                    [weakself.upperController maximizedController: lowerContDiff];
                 
             } completion:nil];
             
@@ -325,7 +317,7 @@
                 if ([weakself.upperController respondsToSelector:@selector(minimizedController:)])
                     [weakself.upperController minimizedController:upperContDiff];
                 if ([weakself.lowerController respondsToSelector:@selector(maximizedController:)])
-                    [weakself.lowerController maximizedController:lowerContDiff];
+                    [weakself.lowerController maximizedController:upperContDiff];
                 
             } completion:nil];
         }
