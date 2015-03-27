@@ -54,7 +54,6 @@ static NSString * const reuseIdentifier = @"Cell";
 
 -(void)minimizedController:(CGFloat)diff{
     [self.view setAlpha:0.3];
-    //[self.collectionView setContentInset:UIEdgeInsetsMake(diff, 0, 0, 0)];
     CGFloat currentOffset = self.collectionView.contentOffset.y;
     [self.collectionView setContentOffset:CGPointMake(0, MIN(diff + currentOffset,
                                                              MAX(0, self.collectionView.contentSize.height - CGRectGetHeight(self.view.frame)))) animated:NO];
@@ -62,7 +61,6 @@ static NSString * const reuseIdentifier = @"Cell";
 
 -(void)maximizedController:(CGFloat)diff{
     [self.view setAlpha:1.0];
-    //[self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     CGFloat currentOffset = self.collectionView.contentOffset.y;
     [self.collectionView setContentOffset:CGPointMake(0, MAX(currentOffset - diff, 0)) animated:NO];
 }

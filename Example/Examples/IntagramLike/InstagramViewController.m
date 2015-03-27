@@ -41,12 +41,12 @@
 
 - (CGFloat)getupperExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
 {
-    return 50.f;
+    return 30.f;
 }
 
 - (CGFloat)getLowerExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
 {
-    return 50.f;
+    return 30.f;
 }
 
 @end

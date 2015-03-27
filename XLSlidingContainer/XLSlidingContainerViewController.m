@@ -266,8 +266,10 @@
     CGPoint location = [gr locationInView:self.navView];
     CGRect frame = self.dragView.frame;
     
-    frame.origin.y = MAX(frame.origin.y - [self.delegate getLowerExtraDraggableArea:self], 0);
-    frame.size.height = frame.size.height + 2*[self.delegate getupperExtraDraggableArea:self];
+    if (gr.state == UIGestureRecognizerStateBegan){
+        frame.origin.y = MAX(frame.origin.y - [self.delegate getLowerExtraDraggableArea:self], 0);
+        frame.size.height = frame.size.height + 2*[self.delegate getupperExtraDraggableArea:self];
+    }
     
     CGPoint dy = [gr translationInView:self.navView];
     [gr setTranslation:CGPointZero inView:self.navView];
