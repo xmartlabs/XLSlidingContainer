@@ -194,6 +194,7 @@ This datasource defines the basics:
 }
 ```
 In this case we want our Dragbar to hide the upper controller and we have another view for the Dragbar. It does not look very appealing but it is to show that you can customize it as you want, even its height.
+We use the default movement type that hides the upper controller.
 
 Requirements
 -------------
