@@ -1,4 +1,4 @@
-#XLSlidingContainer
+XLSlidingContainer
 ---------------
 By [XMARTLABS](http://xmartlabs.com).
 
