@@ -168,7 +168,7 @@
     
     CGRect middle = CGRectMake(0, (self.navView.bounds.size.height - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight]), self.navView.bounds.size.width, [self dragViewHeight]);
     self.dragView.frame = middle;
-    CGRect upper = CGRectMake(0, 0, self.navView.bounds.size.width, (self.navView.bounds.size.height - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight] ));
+    CGRect upper = CGRectMake(0, 0, self.navView.bounds.size.width, (self.navView.bounds.size.height - [self.delegate getLowerViewMinFor:self] - [self dragViewHeight]));
     self.upperView.frame = upper;
     CGRect lower = CGRectMake(0, (self.navView.bounds.size.height - [self.delegate getLowerViewMinFor:self]), self.navView.bounds.size.width, [self.delegate getLowerViewMinFor:self]);
     self.lowerView.frame = lower;
@@ -214,9 +214,9 @@
         }
         else{
         
-            f0.origin.y += translation.y;
-            
             f1.size.height += translation.y;
+            
+            f0.origin.y += translation.y;
             
             f2.size.height -= translation.y;
             f2.origin.y += translation.y;
@@ -240,16 +240,16 @@
                 
                 f0.origin.y = f1.origin.y + f1.size.height;
                 
-                f2.size.height = self.navView.bounds.size.height - f0.size.height  - [self.delegate getUpperViewMinFor:self];
                 f2.origin.y = f0.origin.y + f0.size.height;
+                f2.size.height = self.navView.bounds.size.height - f0.size.height  - [self.delegate getUpperViewMinFor:self];
             }
             
         }
         else{
             
-            f0.origin.y += translation.y;
-            
             f1.origin.y += translation.y;
+            
+            f0.origin.y += translation.y;
             
             f2.size.height -= translation.y;
             f2.origin.y += translation.y;
@@ -270,8 +270,8 @@
     CGRect frame = self.dragView.frame;
     
     if (gr.state == UIGestureRecognizerStateBegan){
-        frame.origin.y = MAX(frame.origin.y - [self.delegate getLowerExtraDraggableArea:self], 0);
-        frame.size.height = frame.size.height + 2*[self.delegate getupperExtraDraggableArea:self];
+        frame.origin.y = MAX(frame.origin.y - [self.delegate getupperExtraDraggableArea:self], 0);
+        frame.size.height = frame.size.height + [self.delegate getLowerExtraDraggableArea:self] + [self.delegate getupperExtraDraggableArea:self];
     }
     
     if ( gr.state == UIGestureRecognizerStateChanged )
@@ -315,7 +315,7 @@
         CGFloat lowerContDiff = (CGRectGetHeight(self.navView.frame) - [self.delegate getLowerViewMinFor:self] - actualPos);
         CGFloat upperContDiff = (actualPos - [self.delegate getUpperViewMinFor:self] - [self dragViewHeight]);
         if ((self.panDirection > 0) || ((self.panDirection == 0) && (self.dragView.frame.origin.y > 0.5*CGRectGetHeight(self.navView.frame)))){
-            [UIView animateWithDuration:(0.9 - (realVelocity/2))  delay:0.0 usingSpringWithDamping:0.8 - (realVelocity/2) initialSpringVelocity:realVelocity options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
+            [UIView animateWithDuration:(0.9 - (realVelocity/2))  delay:0.0 usingSpringWithDamping:0.9 - (realVelocity/2) initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
                 if ([weakself.lowerController respondsToSelector:@selector(minimizedController:)])
@@ -327,7 +327,7 @@
             
         }
         else{
-            [UIView animateWithDuration:(0.9 - (realVelocity/2)) delay:0.0 usingSpringWithDamping:0.8 - (realVelocity/2) initialSpringVelocity:realVelocity options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
+            [UIView animateWithDuration:(0.9 - (realVelocity/2)) delay:0.0 usingSpringWithDamping:0.9 - (realVelocity/2) initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction animations:^{
                 
                 [weakself updateViews:dy forState:gr.state];
                 if ([weakself.upperController respondsToSelector:@selector(minimizedController:)])
@@ -417,12 +417,12 @@
 
 - (CGFloat) getUpperViewMinFor:(XLSlidingContainerViewController *)sliderViewController
 {
-    return (CGRectGetHeight(self.navView.frame) / 5);
+    return ceil(CGRectGetHeight(self.navView.frame) / 5);
 }
 
 - (CGFloat) getLowerViewMinFor:(XLSlidingContainerViewController *)sliderViewController
 {
-    return ((CGRectGetHeight(self.navView.frame) - [self dragViewHeight]) / 4);
+    return ceil((CGRectGetHeight(self.navView.frame) - [self dragViewHeight]) / 4);
 }
 
 - (CGFloat) getLowerExtraDraggableArea:(XLSlidingContainerViewController *)sliderViewController
