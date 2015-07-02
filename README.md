@@ -2,6 +2,9 @@ XLSlidingContainer
 ---------------
 By [XMARTLABS](http://xmartlabs.com).
 
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/xmartlabs/XLSlidingContainer/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/pod-1.0.0-blue.svg)](https://github.com/xmartlabs/XLSlidingContainer/releases)
+
 XLSlidingContainer is a Custom Container Controller that embeds two independent ViewControllers at the same time. One appears at the top half of the screen (we call it upper) and the other shows at the bottom one(lower). In the middle there is a bar that separates them and that can be dragged up and down to maximize or minimize each of the controllers.
 When the bar is dragged up the upper ViewController will minimize and the lower one will maximize. When it is dragged down it behaves the other way around.
 
