@@ -36,8 +36,8 @@
 @property (nonatomic) NSInteger panDirection;
 @property (weak, nonatomic) IBOutlet UIView *navView;
 
-@property (nonatomic) UIViewController <XLSlidingContainerViewController> *lowerController;
-@property (nonatomic) UIViewController <XLSlidingContainerViewController> *upperController;
+@property (nonatomic) UIViewController <XLContainedViewVController> *lowerController;
+@property (nonatomic) UIViewController <XLContainedViewVController> *upperController;
 
 @end
 

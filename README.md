@@ -11,7 +11,7 @@ When the bar is dragged up the upper ViewController will minimize and the lower 
 #####Screenshot of an example using XLSlidingContainer
 ![Screenshot of Example](Example/XLSlidingContainer/images/XLSliderDemo.gif)
 
-The embedded controllers have to conform to the XLSlidingContainerViewController protocol to be informed of changes to their display size. This might be of interest to them as they might want to change their appearance and layout when that happens. These functions are optional but will surely be defined in most cases:
+The embedded controllers have to conform to the XLContainedViewController protocol to be informed of changes to their display size. This might be of interest to them as they might want to change their appearance and layout when that happens. These functions are optional but will surely be defined in most cases:
 ```objc
 - (void) minimizedController:(CGFloat) diff;
 - (void) maximizedController:(CGFloat) diff;
@@ -22,8 +22,8 @@ The parameter diff stands for the absolute amounts of points the dragbar moved f
 XLSliderViewController has a datasource and a delegate property. After instantiating this custom controller a datasource -from where the subcontrollers will be retrieved- must be set. Optionally you can change the Dragbar implementing the function "getDragView" as shown in the examples.
 ```objc
 @required
-- (UIViewController <XLSlidingContainerViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController;
-- (UIViewController <XLSlidingContainerViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController;
+- (UIViewController <XLContainedViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController;
+- (UIViewController <XLContainedViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController;
 
 @optional
 - (UIView*) getDragView;
@@ -71,7 +71,7 @@ How to use it
 
 To use XLSlidingContainerViewController follow these steps:
 
-1.  Implement the two controllers you want to embed in the XLSlidingContainerViewController. Keep in mind that they have to conform to the protocol with the same name.
+1.  Implement the two controllers you want to embed in the XLSlidingContainerViewController. Keep in mind that they have to conform to the XLContainedViewController protocol.
 
 2.  Extend the XLSlidingContainerViewController and implement its datasource methods setting the previous controllers to be the subcontrollers of it. You could also use the base controller and just set its datasource to be one of your controllers that implements the required methods.
 You can optionally implement the delegate methods as well.
@@ -92,7 +92,7 @@ The most interesting customizable features are:
   The delegate of the controller has to implement two methods that define the minimum space each controller gets when minimized. If the delegate is not set then the XLSlidingController will set some default values.
 
 * #####The behavior of the controllers when their layout changes.
-  The embedded subcontrollers have to conform to the XLSlidingContainerViewController protocol. By doing so, it will get notified when it is being minimized, maximized and for each pan movement that happens in the main controller. Examples that can be done here are changing the controllers Alpha value or the content offset.
+  The embedded subcontrollers have to conform to the XLContainedViewController protocol. By doing so, it will get notified when it is being minimized, maximized and for each pan movement that happens in the main controller. Examples that can be done here are changing the controllers Alpha value or the content offset.
 
 * #####The appearance of the Dragbar.
   By default the XLSlidingContainerViewController comes with a simple darkgray colored Dragbar. You can change this in the datasource by implementing the function:
@@ -113,10 +113,10 @@ The Dragbar's behavior is defined to hide the lower view and to push the upper v
 In fact the ViewController at the bottom of the screen is a CollectionViewController and therefore we define a CollectionViewCell class as well.
 In this example we extend the XLSlidingContainerViewController and implement the datasource methods as follows:
 ```objc
-- (UIViewController <XLSlidingContainerViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController{
+- (UIViewController <XLContainedViewController>*) getUpperControllerFor:(XLSlidingContainerViewController *)sliderViewController{
     return [[ScrollViewController alloc] init];
 }
-- (UIViewController <XLSlidingContainerViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController{
+- (UIViewController <XLContainedViewController>*) getLowerControllerFor:(XLSlidingContainerViewController *)sliderViewController{
     UICollectionViewFlowLayout* collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
     collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     collectionViewLayout.itemSize = CGSizeMake(90, 60);
@@ -183,10 +183,10 @@ sliderVC.dataSource = [[HideUpperDataSource alloc] init];
 
 This datasource defines the basics:
 ```objc
-- (UIViewController <XLSlidingContainerViewController>* ) getLowerControllerFor:(XLSlidingContainerViewController * )sliderViewController{
+- (UIViewController <XLContainedViewController>* ) getLowerControllerFor:(XLSlidingContainerViewController * )sliderViewController{
     return [[ScrollViewController alloc] init];
 }
-- (UIViewController <XLSlidingContainerViewController>* ) getUpperControllerFor:(XLSlidingContainerViewController * )sliderViewController{
+- (UIViewController <XLContainedViewController>* ) getUpperControllerFor:(XLSlidingContainerViewController * )sliderViewController{
     CountryTableViewController* ctvc = [[CountryTableViewController alloc] init];
     return [[SimpleNavigationController alloc] initWithRootViewController:ctvc];
 }
@@ -208,6 +208,11 @@ Requirements
 
 Release Notes
 --------------
+
+Version 1.0.1
+
+* Changed XLSlidingContainerViewController protocol to XLContainedViewController
+* Added Swift example
 
 Version 1.0.0 (cocoaPod)
 
