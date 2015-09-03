@@ -9,7 +9,7 @@ XLSlidingContainer is a Custom Container Controller that embeds two independent 
 When the bar is dragged up the upper ViewController will minimize and the lower one will maximize. When it is dragged down it behaves the other way around.
 
 #####Screenshot of an example using XLSlidingContainer
-![Screenshot of Example](Example/XLSlidingContainer/images/XLSliderDemo.gif)
+![Screenshot of Example](ObjectiveCExample/XLSlidingContainer/images/XLSliderDemo.gif)
 
 The embedded controllers have to conform to the XLContainedViewController protocol to be informed of changes to their display size. This might be of interest to them as they might want to change their appearance and layout when that happens. These functions are optional but will surely be defined in most cases:
 ```objc
