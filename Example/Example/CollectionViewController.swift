@@ -48,9 +48,6 @@ class CollectionViewController: UICollectionViewController, ContainedViewControl
         collectionView!.setContentOffset(CGPoint(x: 0, y: max(0, currentOffset - diff)), animated: false)
     }
 
-    func updateFrameFor(heightPercentaje yPct: CGFloat, absolute diff: CGFloat) { }
-
-
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

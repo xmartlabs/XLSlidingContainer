@@ -33,13 +33,10 @@ class ScrollViewController: UIViewController, ContainedViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView = UIImageView(image: UIImage(named: "stonehenge")!)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        let scrollView = UIScrollView();
-        scrollView.addSubview(imageView);
-        scrollView.contentSize = imageView.bounds.size;
-        view = scrollView;
+        let scrollView = UIScrollView()
+        scrollView.addSubview(imageView)
+        scrollView.contentSize = imageView.bounds.size
+        view = scrollView
     }
 
     func didMinimizeControllerWith(diff: CGFloat) {
@@ -50,6 +47,5 @@ class ScrollViewController: UIViewController, ContainedViewController {
         view.alpha = 1.0
     }
 
-    func updateFrameFor(heightPercentaje yPct: CGFloat, absolute diff: CGFloat) { }
 }
 

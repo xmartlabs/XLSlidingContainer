@@ -52,27 +52,4 @@ class ViewController: SlidingContainerViewController, SlidingContainerDelegate, 
         return viewController
     }
 
-    func upperViewMin(for slidingContainer: SlidingContainerViewController) -> CGFloat {
-        return (slidingContainer.navView?.frame.height ?? 0) / 5
-    }
-
-    func lowerViewMin(for slidingContainer: SlidingContainerViewController) -> CGFloat {
-        return (slidingContainer.navView?.frame.height ?? 0) / 4
-    }
-
-    func upperExtraDraggableArea(for slidingContainer: SlidingContainerViewController) -> CGFloat {
-        return 15.0
-    }
-
-    func lowerExtraDraggableArea(for slidingContainer: SlidingContainerViewController) -> CGFloat {
-        return 15.0
-    }
-
-    func slidingContainerDidBeingDrag(_ slidingContainer: SlidingContainerViewController) {
-
-    }
-
-    func slidingContainerDidEndDrag(_ slidingContainer: SlidingContainerViewController) {
-
-    }
 }

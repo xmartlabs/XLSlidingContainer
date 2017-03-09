@@ -45,11 +45,17 @@ public protocol ContainedViewController {
 
 }
 
-extension ContainedViewController where Self: UIViewController {
+public extension ContainedViewController where Self: UIViewController {
 
     public var viewController: UIViewController {
         return self
     }
+
+    func didMinimizeControllerWith(diff: CGFloat) {}
+
+    func didMaximizeControllerWith(diff: CGFloat) {}
+
+    func updateFrameFor(heightPercentaje yPct: CGFloat, absolute diff: CGFloat) {}
 
 }
 
@@ -61,9 +67,9 @@ public protocol SlidingContainerPresenter: class {
 
     func upperController(for slidingContainer: SlidingContainerViewController) -> ContainedViewController
 
-    func upperViewMin(for slidingContainer: SlidingContainerViewController) -> CGFloat
+    func upperViewMinHeight(for slidingContainer: SlidingContainerViewController) -> CGFloat
 
-    func lowerViewMin(for slidingContainer: SlidingContainerViewController) -> CGFloat
+    func lowerViewMinHeight(for slidingContainer: SlidingContainerViewController) -> CGFloat
 
     func upperExtraDraggableArea(for slidingContainer: SlidingContainerViewController) -> CGFloat
 
@@ -71,11 +77,38 @@ public protocol SlidingContainerPresenter: class {
 
 }
 
+public extension SlidingContainerPresenter {
+
+    func lowerViewMinHeight(for slidingContainer: SlidingContainerViewController) -> CGFloat {
+        return (slidingContainer.navView?.frame.height ?? 0) / 5
+    }
+
+    func upperViewMinHeight(for slidingContainer: SlidingContainerViewController) -> CGFloat {
+        return (slidingContainer.navView?.frame.height ?? 0) / 4
+    }
+
+    func upperExtraDraggableArea(for slidingContainer: SlidingContainerViewController) -> CGFloat {
+        return 15.0
+    }
+
+    func lowerExtraDraggableArea(for slidingContainer: SlidingContainerViewController) -> CGFloat {
+        return 15.0
+    }
+}
+
 public protocol SlidingContainerDelegate: class {
 
-    func slidingContainerDidBeingDrag(_ slidingContainer: SlidingContainerViewController)
+    func slidingContainerDidBeginDrag(_ slidingContainer: SlidingContainerViewController)
 
     func slidingContainerDidEndDrag(_ slidingContainer: SlidingContainerViewController)
+
+}
+
+public extension SlidingContainerDelegate {
+
+    func slidingContainerDidBeginDrag(_ slidingContainer: SlidingContainerViewController) {}
+
+    func slidingContainerDidEndDrag(_ slidingContainer: SlidingContainerViewController) {}
 
 }
 
@@ -91,21 +124,25 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
 
     public weak var delegate: SlidingContainerDelegate!
 
-    public var upperController: ContainedViewController!
+    private var upperController: ContainedViewController!
 
-    public var lowerController: ContainedViewController!
+    private var lowerController: ContainedViewController!
 
-    public let upperView: UIView = UIView()
+    private let upperView: UIView = UIView()
 
-    public let lowerView: UIView = UIView()
+    private let lowerView: UIView = UIView()
 
-    var panDirection: Int = 0
+    private var panDirection: Int = 0
 
     private var initialPositionSetUp = false
 
     private var isDragging = false
 
     private var lastChange = 0.0
+
+    private var dragHeight: CGFloat {
+        return dragView?.frame.height ?? 42
+    }
 
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,11 +153,11 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         addChildViewController(upperController.viewController)
         addChildViewController(lowerController.viewController)
 
-        navView = navView == nil ? view : navView
+        navView = navView ?? view
 
         let dView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 42))
         dView.backgroundColor = .darkGray
-        dragView = dragView == nil ? dView : dragView
+        dragView = dragView ?? dView
 
         navView?.addSubview(upperView)
         navView?.addSubview(dragView!)
@@ -156,22 +193,21 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         upperController.viewController.view.frame = frameForUpperController()
     }
 
-    func getMovementDifference() -> CGFloat {
+    private func getMovementDifference() -> CGFloat {
         guard let navView = navView else { return 0 }
-        let diff = navView.frame.height - presenter.upperViewMin(for: self) - presenter.lowerViewMin(for: self) - (dragView?.frame.height ?? 42)
+        let diff = navView.frame.height - presenter.upperViewMinHeight(for: self) - presenter.lowerViewMinHeight(for: self) - (dragView?.frame.height ?? 42)
         return diff
     }
 
     // MARK: Frame Management
 
-    func drawViews() {
+    private func drawViews() {
         guard let navView = navView else { return }
         let navHeight = navView.frame.height
         let navWidth = navView.frame.width
-        let dragHeight = (dragView?.frame.height ?? 42)
         let middle = CGRect(
             x: 0,
-            y: navHeight - presenter.lowerViewMin(for: self) - dragHeight,
+            y: navHeight - presenter.lowerViewMinHeight(for: self) - dragHeight,
             width: navWidth,
             height: dragHeight
         )
@@ -179,13 +215,13 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
             x: 0,
             y: 0,
             width: navWidth,
-            height: navHeight - presenter.lowerViewMin(for: self) - dragHeight
+            height: navHeight - presenter.lowerViewMinHeight(for: self) - dragHeight
         )
         let lower = CGRect(
             x: 0,
-            y: navHeight - presenter.lowerViewMin(for: self),
+            y: navHeight - presenter.lowerViewMinHeight(for: self),
             width: navWidth,
-            height: presenter.lowerViewMin(for: self)
+            height: presenter.lowerViewMinHeight(for: self)
         )
 
         upperView.frame = upper
@@ -193,7 +229,7 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         lowerView.frame = lower
     }
 
-    func frameForLowerController() -> CGRect {
+    private func frameForLowerController() -> CGRect {
         let lower = CGRect(
             x: 0,
             y: 0,
@@ -203,7 +239,7 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         return lower
     }
 
-    func frameForUpperController() -> CGRect {
+    private func frameForUpperController() -> CGRect {
         let upper = CGRect(
             x: 0,
             y: 0,
@@ -213,7 +249,7 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         return upper
     }
 
-    func updateViews(with translation: CGPoint, forState state: UIGestureRecognizerState) {
+    private func updateViews(with translation: CGPoint, forState state: UIGestureRecognizerState) {
         var f0 = dragView?.frame ?? .zero
         var f1 = upperView.frame
         var f2 = lowerView.frame
@@ -221,18 +257,15 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         switch presenter.movementType {
         case .hideUpperPushLower:
             if state == .ended {
-                if
-                    let navHeight = navView?.frame.height,
-                    panDirection > 0 || (panDirection == 0 && ((dragView?.frame.origin.y ?? 0) > 0.5 * navHeight))
-                {
-                    f2.size.height = presenter.lowerViewMin(for: self)
-                    f2.origin.y = navHeight - presenter.lowerViewMin(for: self)
+                if shouldHideBottomView() {
+                    f2.size.height = presenter.lowerViewMinHeight(for: self)
+                    f2.origin.y = (navView?.frame.height ?? 0) - presenter.lowerViewMinHeight(for: self)
                     f0.origin.y = f2.origin.y - f0.size.height
                     f1.size.height = f0.origin.y
                 } else {
-                    f1.size.height = presenter.upperViewMin(for: self)
+                    f1.size.height = presenter.upperViewMinHeight(for: self)
                     f0.origin.y = f1.origin.y + f1.size.height
-                    f2.size.height = (navView?.frame.height ?? 0) - f0.size.height - presenter.upperViewMin(for: self)
+                    f2.size.height = (navView?.frame.height ?? 0) - f0.size.height - presenter.upperViewMinHeight(for: self)
                     f2.origin.y = f0.origin.y + f0.size.height
                 }
             } else {
@@ -243,27 +276,23 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
             }
         case .push:
             if state == .ended {
-                if
-                    let navHeight = navView?.frame.height,
-                    panDirection > 0 || (panDirection == 0 && ((dragView?.frame.origin.y ?? 0) > 0.5 * navHeight))
-                {
-                    f2.size.height = presenter.lowerViewMin(for: self)
-                    f2.origin.y = navHeight - presenter.lowerViewMin(for: self)
+                if shouldHideBottomView() {
+                    f2.size.height = presenter.lowerViewMinHeight(for: self)
+                    f2.origin.y = (navView?.frame.height ?? 0) - presenter.lowerViewMinHeight(for: self)
                     f0.origin.y = f2.origin.y - f0.size.height
                     f1.origin.y = 0
                 } else {
-                    f1.origin.y = presenter.upperViewMin(for: self) - f1.size.height
+                    f1.origin.y = presenter.upperViewMinHeight(for: self) - f1.size.height
                     f0.origin.y = f1.origin.y + f1.size.height
                     f2.origin.y = f0.origin.y + f0.size.height
-                    f2.size.height = (navView?.frame.height ?? 0) - f0.size.height - presenter.upperViewMin(for: self)
+                    f2.size.height = (navView?.frame.height ?? 0) - f0.size.height - presenter.upperViewMinHeight(for: self)
                 }
             } else {
-                f1.origin.y  += translation.y
+                f1.origin.y += translation.y
                 f0.origin.y += translation.y
                 f2.size.height -= translation.y
                 f2.origin.y += translation.y
             }
-
         }
 
         lowerView.frame = f2
@@ -272,6 +301,13 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
 
         lowerController.viewController.view.frame = frameForLowerController()
         upperController.viewController.view.frame = frameForUpperController()
+    }
+
+    private func shouldHideBottomView() -> Bool {
+        guard let navHeight = navView?.frame.height else {
+            return false
+        }
+        return panDirection > 0 || (panDirection == 0 && ((dragView?.frame.origin.y ?? 0) > 0.5 * navHeight))
     }
 
     func panDragView(sender: UIPanGestureRecognizer) {
@@ -290,9 +326,11 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         var dy = sender.translation(in: navView)
         sender.setTranslation(.zero, in: navView)
 
-        if !frame.contains(location) && !isDragging {
+        guard frame.contains(location) || isDragging else {
             return
-        } else if !isDragging {
+        }
+
+        if !isDragging {
             isDragging = true
             delegate.slidingContainerDidEndDrag(self)
         }
@@ -309,8 +347,8 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
             delegate.slidingContainerDidEndDrag(self)
 
             let actualPos = lowerView.frame.origin.y
-            let lowerContDiff = (navView?.frame.height ?? 0) - presenter.lowerViewMin(for: self) - actualPos
-            let upperContDif = actualPos - presenter.upperViewMin(for: self) - (dragView?.frame.height ?? 42)
+            let lowerContDiff = (navView?.frame.height ?? 0) - presenter.lowerViewMinHeight(for: self) - actualPos
+            let upperContDif = actualPos - presenter.upperViewMinHeight(for: self) - (dragView?.frame.height ?? 42)
 
             if
                 let navHeight = navView?.frame.height,
@@ -353,18 +391,18 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
 
         if dy.y > 0 {
             let xx = (navView?.frame.height ?? 0) - lowerView.frame.origin.y + dy.y
-            if xx <= presenter.lowerViewMin(for: self) {
-                dy.y = (navView?.frame.height ?? 0) - lowerView.frame.origin.y - presenter.lowerViewMin(for: self)
+            if xx <= presenter.lowerViewMinHeight(for: self) {
+                dy.y = (navView?.frame.height ?? 0) - lowerView.frame.origin.y - presenter.lowerViewMinHeight(for: self)
 
             }
-        } else if upperView.frame.origin.y + upperView.frame.height + dy.y <= presenter.upperViewMin(for: self) {
-            dy.y = presenter.upperViewMin(for: self) - upperView.frame.height - upperView.frame.origin.y
+        } else if upperView.frame.origin.y + upperView.frame.height + dy.y <= presenter.upperViewMinHeight(for: self) {
+            dy.y = presenter.upperViewMinHeight(for: self) - upperView.frame.height - upperView.frame.origin.y
         }
 
         updateViews(with: dy, forState: sender.state)
 
-        let first = (dragView?.frame.origin.y ?? 0) - presenter.upperViewMin(for: self)
-        let second = (navView?.frame.height ?? 0) - presenter.upperViewMin(for: self) - presenter.lowerViewMin(for: self) - (dragView?.frame.height ?? 42)
+        let first = (dragView?.frame.origin.y ?? 0) - presenter.upperViewMinHeight(for: self)
+        let second = (navView?.frame.height ?? 0) - presenter.upperViewMinHeight(for: self) - presenter.lowerViewMinHeight(for: self) - (dragView?.frame.height ?? 42)
         let yPct = 100 * (first / second)
         upperController.updateFrameFor(heightPercentaje: yPct, absolute: dy.y)
         lowerController.updateFrameFor(heightPercentaje: 100 - yPct, absolute: dy.y)
@@ -372,7 +410,7 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         panDirection = Int(dy.y)
     }
 
-    func reloadLowerViewController() {
+    private func reloadLowerViewController() {
         lowerController.viewController.willMove(toParentViewController: nil)
         lowerView.removeFromSuperview()
         lowerController.viewController.removeFromParentViewController()
@@ -383,18 +421,18 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         lowerController.didMinimizeControllerWith(diff: getMovementDifference())
     }
 
-    func reloadUpperViewController() {
+    private func reloadUpperViewController() {
         upperController.viewController.willMove(toParentViewController: nil)
         upperView.removeFromSuperview()
         upperController.viewController.removeFromParentViewController()
-
+        
         upperController = presenter.upperController(for: self)
         addChildViewController(upperController.viewController)
         upperView.addSubview(upperController.viewController.view)
         upperController.didMinimizeControllerWith(diff: getMovementDifference())
     }
-
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    
+    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
