@@ -425,14 +425,15 @@ open class SlidingContainerViewController: UIViewController, UIGestureRecognizer
         upperController.viewController.willMove(toParentViewController: nil)
         upperView.removeFromSuperview()
         upperController.viewController.removeFromParentViewController()
-        
+
         upperController = presenter.upperController(for: self)
         addChildViewController(upperController.viewController)
         upperView.addSubview(upperController.viewController.view)
         upperController.didMinimizeControllerWith(diff: getMovementDifference())
     }
-    
+
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+
 }

@@ -25,7 +25,9 @@
 import UIKit
 import SlidingContainer
 
-class ViewController: SlidingContainerViewController, SlidingContainerDelegate, SlidingContainerPresenter {
+class ViewController: SlidingContainerViewController,
+    SlidingContainerDelegate,
+    SlidingContainerPresenter {
 
     override func viewDidLoad() {
         presenter = self
@@ -37,7 +39,9 @@ class ViewController: SlidingContainerViewController, SlidingContainerDelegate, 
 
     let movementType: MovementType = .push
 
-    func lowerController(for slidingContainer: SlidingContainerViewController) -> ContainedViewController {
+    func lowerController(
+        for slidingContainer: SlidingContainerViewController
+        ) -> ContainedViewController {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.itemSize = CGSize(width: 90, height: 60)
         collectionViewLayout.scrollDirection = .vertical
@@ -47,7 +51,9 @@ class ViewController: SlidingContainerViewController, SlidingContainerDelegate, 
         return controller
     }
 
-    func upperController(for slidingContainer: SlidingContainerViewController) -> ContainedViewController {
+    func upperController(
+        for slidingContainer: SlidingContainerViewController
+        ) -> ContainedViewController {
         let viewController = ScrollViewController()
         return viewController
     }

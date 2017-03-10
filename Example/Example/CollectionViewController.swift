@@ -33,35 +33,66 @@ class CollectionViewController: UICollectionViewController, ContainedViewControl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.collectionView!.register(MyImageCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(
+            MyImageCollectionViewCell.self,
+            forCellWithReuseIdentifier: reuseIdentifier
+        )
     }
 
     func didMinimizeControllerWith(diff: CGFloat) {
         view.alpha = 0.3
         let currentOffset = collectionView!.contentOffset.y
-        collectionView!.setContentOffset(CGPoint(x: 0, y: min(diff + currentOffset, max(0, collectionView!.contentSize.height - view.frame.size.height))), animated: false)
+        collectionView!
+            .setContentOffset(
+                CGPoint(
+                    x: 0,
+                    y: min(
+                        diff + currentOffset,
+                        max(
+                            0,
+                            collectionView!.contentSize.height - view.frame.size.height
+                    )
+                )),
+                animated: false)
     }
 
     func didMaximizeControllerWith(diff: CGFloat) {
         view.alpha = 1.0
         let currentOffset = collectionView!.contentOffset.y
-        collectionView!.setContentOffset(CGPoint(x: 0, y: max(0, currentOffset - diff)), animated: false)
+        collectionView!
+            .setContentOffset(
+                CGPoint(
+                    x: 0,
+                    y: max(0, currentOffset - diff)),
+                animated: false
+        )
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+        ) -> Int {
         return 24
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MyImageCollectionViewCell else { return UICollectionViewCell() }
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+        ) -> UICollectionViewCell {
+        guard
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: reuseIdentifier,
+                for: indexPath
+            ) as? MyImageCollectionViewCell
+            else { return UICollectionViewCell() }
         let image = UIImage(named: "flag_\(indexPath.item)")!
         cell.setImage(image: image)
 
         return cell
     }
-    
+
 }

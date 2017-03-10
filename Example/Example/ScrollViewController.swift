@@ -28,8 +28,8 @@ import SlidingContainer
 
 class ScrollViewController: UIViewController, ContainedViewController {
 
-    private var imageView : UIImageView!
-    
+    private var imageView: UIImageView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView = UIImageView(image: UIImage(named: "stonehenge")!)
@@ -48,4 +48,3 @@ class ScrollViewController: UIViewController, ContainedViewController {
     }
 
 }
-

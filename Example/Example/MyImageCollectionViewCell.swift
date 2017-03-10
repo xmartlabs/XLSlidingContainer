@@ -33,20 +33,26 @@ class MyImageCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         initialize()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func initialize(){
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height))
+    func initialize() {
+        imageView = UIImageView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: self.frame.size.width,
+                height: self.frame.size.height
+            )
+        )
         imageView!.backgroundColor = .white
         contentView.addSubview(imageView!)
     }
 
-    internal func setImage(image: UIImage){
+    internal func setImage(image: UIImage) {
         imageView.image = image
     }
-    
-}
 
+}
