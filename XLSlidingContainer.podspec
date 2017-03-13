@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/xmartlabs'
   s.ios.deployment_target = '9.0'
   s.requires_arc = true
-  s.ios.source_files = 'SlidingContainer/Sources/**/*.{swift}'
+  s.ios.source_files = 'Sources/*.{swift}'
   s.ios.frameworks = 'UIKit', 'Foundation'
 
 end
